@@ -1,0 +1,243 @@
+<html>
+
+<head>
+    <style>
+    input {
+        font-family: 華康細圓體
+    }
+    </style>
+    <script>
+    function showStatExp() {
+        eval('var aa=new Array("' + arguments[0].replace(/\./g, '","') + '");');
+        var itemTitle = new Array("100分", "90~99", "80~89", "70~79", "60~69", "59以下");
+        var total = 0;
+        var max = aa[1];
+        for (var i = 1; i < aa.length; i++) {
+            total += aa[i];
+            if (aa[i] > max) max = aa[i];
+        }
+        var sw = window.open('', '', 'width=600 height=400 toolbars=0');
+        with(sw.document) {
+            writeln('<html><head><title>統計圖表</title></head>');
+            writeln('<body style="background-color:#DCF8C9;font-family: 華康細圓體; font-size: 28 pt; color:#C68C8C" link="#C6CC8A" onMouseDown="if(event.button==2)window.close()">');
+            writeln('<p align="center" style="color:#FFA851">' + aa[0] + '成績統計</p>');
+            for (var i = 1; i < aa.length; i++) {
+                writeln('<table width="90%" align="center" style="font-family:Arial;font-size:11 pt"><tr><td width="15%" align="right">' + itemTitle[i - 1] + '</td>');
+                writeln('<td style="background-color:' + (i == aa.length - 1 ? '#FCA5F5' : '#78A7F5') + '" width="' + (aa[i] == 0 ? 1 : Math.floor(70 * aa[i] / max)) + '%" align="center"></td>');
+                writeln('<td style="color:#54A972">' + aa[i] + '人</td></tr><tr><td></td><tr></table>');
+            }
+            writeln('<p align="center" style="font-size:16 pt"><a href="javascript:close()">關閉視窗</a></p>');
+            writeln('</body></html>');
+        }
+    }
+
+    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    function eK(pK) {
+        var k = new Array(keyStr.length - 1);
+        for (var i = 0; i < k.length; i++) k[i] = keyStr.charAt(i);
+        var c, temp;
+        for (var i = 0; i < pK.length; i++) {
+            c = pK.charCodeAt(i) >> 2;
+            if (c < k.length - 1) {
+                temp = k[k.length - 1];
+                k[k.length - 1] = k[c];
+                k[c] = temp;
+            }
+        }
+        keyStr = k.toString().replace(/,/g, '') + '=';
+    }
+
+    function dx(input) {
+        var output = '';
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+        var i = 0;
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+        do {
+            enc1 = keyStr.indexOf(input.charAt(i++));
+            enc2 = keyStr.indexOf(input.charAt(i++));
+            enc3 = keyStr.indexOf(input.charAt(i++));
+            enc4 = keyStr.indexOf(input.charAt(i++));
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+            output = output + String.fromCharCode(chr1);
+            if (enc3 != 64) {
+                output = output + String.fromCharCode(chr2);
+            }
+            if (enc4 != 64) {
+                output = output + String.fromCharCode(chr3);
+            }
+        } while (i < input.length);
+        input = output;
+        var c;
+        var char2, char3;
+        output = '';
+        var i = 0;
+        while (i < input.length) {
+            c = input.charCodeAt(i++);
+            switch (c >> 4) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    output += input.charAt(i - 1);
+                    break;
+                case 12:
+                case 13:
+                    char2 = input.charCodeAt(i++);
+                    output += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+                    break;
+                case 14:
+                    char2 = input.charCodeAt(i++);
+                    char3 = input.charCodeAt(i++);
+                    output += String.fromCharCode(((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0));
+                    break;
+            }
+        }
+        return output;
+    }
+    eK(keyStr);
+    eval(dx('ZnVuW3Rpb24gZG9TdQJzdHJpbmcoc3RyKHNwbGl0KGZ1bmMpYw0eIHZhciBzaSxlaSxtczsNCiBzaT0wOw0eIGVpLS0xOw0eIGRvYw0eICBzaT0re2VpOw0eICBlaT1zdHIuaQ5kZXhLZihzcGxpdCxzaSk7D/ogIG1zLQVpLjAPc3RyKnN1WnN0cmluZyhzaSxlaSk6c3RyKnN1WnN0cmluZyhzaSxzdHIubGVuZ3RoeTsNCiAgZnVuWyhtcyk7D/ogfXdoaQxleGVpLj0weTsNCn0='));
+    g = new Array(0);
+    aV = {
+        id: '',
+        psw: '',
+        gs: '',
+        os: ''
+    };
+    eval(dx('ZnVuW3Rpb24gaQ5pdChzdHIpY2RvU3Vic3RyaQ5neGR4eHN0ciksJyWnKGFsbG9jWXRlVmFsdQUpO30='));
+
+    function allocateValue(aValue) { //allocate single record
+        var nc = aValue.indexOf(String.fromCharCode(0));
+        if (nc > 0) aValue = aValue.substring(0, nc);
+        if (aV.id == '') aV.id = aValue;
+        else if (aV.psw == '') aV.psw = aValue;
+        else if (aV.gs == '') aV.gs = aValue;
+        else if (aV.os == '') {
+            aV.os = aValue;
+            g[(++g.length) - 1] = {
+                id: aV.id,
+                psw: aV.psw,
+                grades: aV.gs,
+                orders: aV.os
+            }
+            aV.id = '';
+            aV.psw = '';
+            aV.gs = '';
+            aV.os = '';
+        }
+    }
+    eval(dx('ZnVuW3Rpb24gbG9naQ4oaQ/scHN3eXsNCiB2WXIgZm91bm/9KTE7D/ogZm9yeHZhciBpLTA7aTxnKmxlbmd0aDtpeyspD/ogIGlmeGdbaV0uaQ/9LQlkJiWoZ1tpXS5wc3c9LXBzd3x8eGdbMF0ucHN3IT0nICcmJmdbMF0ucHN3LT1wc3cpeSl7D/ogICBmb3VuZD1pOw0eICAgWnJlWQs7D/ogIH0NCiBsaXN0UmVweGZvdQ5keTsNCn0='));
+
+    function listRep(ind) {
+        if (ind < 0) {
+            var s = '<br><br><p style="color:red;font-size:21pt">密碼或查詢姓名錯誤</p>';
+        } else {
+            eval('var ga=new Array("' + g[ind].grades.replace(/,/g, '","') + '");');
+            eval('var oa=new Array("' + g[ind].orders.replace(/,/g, '","') + '");');
+            eval('var ta=new Array("' + g[0].grades.replace(/,/g, '","') + '");')
+            eval('var sa=new Array("' + g[0].orders.replace(/,/g, '","') + '");')
+            for (var i = 0; i < ga.length; i++) ga[i] = (sa[i].length > 0 ? '<a href=javascript:showStatExp("' + ta[i] + '.' + sa[i] + '")>' : '') + ga[i] + (sa[i].length > 0 ? '</a>' : '') + '<sup><font color=red>' + (oa[i] || '') + '</font></sup>';
+            var s = '<p style="font-size:14pt;color:Blue" align=center>' + g[ind].id + '成績查詢結果</p>' + '<table width=80% border=1 cellspacing=0 align=center><tr style="font-family:華康細圓體"><td>' + g[0].grades.replace(/,/g, '</td><td>') + '</td><tr style="font-family:Courier New"><td>' + ga.toString().replace(/,/g, '</td><td>') + '</td>' + '</tr></table>';
+        }
+        document.body.innerHTML = s + '<hr><p><p style="font-family:華康細圓體;color:#008040">成績計算方式為夢想作業15%，老馬識途作業15%，突發作業15%，職場專刊作業30%，上課參與25%，此四類分數按比重相加後即為原始總分。原始總分加上所有的刮刮卡加分，課堂活動參與加分，以及扣除打卡和上課違規分數即為最後總成績～</i></a></p></p>';
+    }
+    </script>
+</head>
+
+<body onLoad="doSubstring(gD.textContent,'*',init)" style="font-family:華康細圓體;font-size:12pt;color:Navy" onContextMenu="return false;">
+    <span id=gD style="visibility:hidden">5aYT5ZCNJiAm6euK5WGH57SA6WyEKOaJk+QNoYaJo+QIhizpgZXopoPkuovku7Ws6WGV6eaL5omj5WiGKDEwMTnlsaXmrbdsb3R0byzmibPoq77kvZzmpa0s5aSi5oOz5K2c5qQtKOiAgYmmrOitmOmAlOS9nOalrSznqoHnmbzkvZzmpa0s5bCI5Wie5K2c5qQtKOiqsuQgguihqOYLvizmoWzpgWrlv4Llvpcs5ryU6eyb5b+D5b6XKOmbu+Q9sYQPg+Q+lyzlpeKmg7LliIbkuqss5a2U6ZuA6IiH5KyB6bQd5Wqg5WiGKOiAgYmXhuaEm+Qwh+avlOaJi+YVq+iFsyzogIHpl4bnm7jomZVMT1RUTyzli57ln7rms5VMT1RUTyzmlWjnjofmlWjog71sb3R0byzljpPlp4vnuK3liIWs5a245pyf57i95WiGJiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*6WOt5bO755GKJjk5OTImKDAsKCwsMyw5MSw4Nyw4Niw4MCw5MCw2KD/sNCwsMSwyKCwsKDg2KjEsMTA2KjEmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5ZCz5K2z6IquJmRkWmImKDAsKCwxKDIsOTAsODUsOD/sODEsODAsKCwzKCwxKDEsKCwsODMuMTUsOTEuMTUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5p2O6W6u5a6HJjEwMDEmKCwsKDEsMiw4OCw3MCw3NSw4MCwsKCwsKDEsMSwsMiwsNTguOTUsNjUuOTUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6WOt5ZOy57atJmExMjMmKDAsKCwsMyw4OSw4Nyw4NSw4Niw4NiwsKCw0KDEsMiwsKCw4Ni40NSw5Ni40NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*6Zmz6Im+55CzJjAyMTWmKDAsKCwsMyw4Nyw4Myw3MCw4NSw4MywsKCwsMSwxKCwsKDgyKjI1KDg3KjI1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5p6X6ZuF5qyjJjA5NTWmKDAsKCwsMyw4Nyw4OSw3Miw4OSw4NiwzKCwsKDEsMSwsKCw4NS40KDkzKj/mKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5pu+6bub6JycJjA1MTWmKDAsKCwsNCw4Niw4Niw4NSw4MCw4OCw0KDIsMywsMS41KDIsKCwsOD/uNTUsMTAxKjA1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*6aGL6KeY5aauJnpzW2cmKDAsKCwsNCw5MCw5Miw4NSw4MCw5MCwyKD/sNSw1KDEsMSwsKCw4Ni41NSwxMDguNTUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6ZmzL+S8tiWyMjE0JiwwKDEwMDXluKbpo5PnianpgKKmlZnlrq/sNSwxKDIsODWsODcsODEsODUsODgsMiwsMywsMSwyKCwsKDg1KjWsOTEuNiWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*6WSt6ZuF5KqRJjE3MDkmKDAsKCwsNCw4NSw4Niw4Miw4MSw4NiwyKDMsNCwsMSwyKCwsKDgzKjc1KDk5Kjc1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*6a2L5Z2H5WCiJjEyMDUmKDAsKCwsMSw4OCw4OCw4Myw4Myw4NSwsKCwsMSwyKCwsKDg1KDg5JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*546K5K2p5rYHJjk2MjAmKDAsKCwsNCw4OSw4MCw3Miw4Nyw4NSwsKCwsMSwyKCwsKDgzKjUsOTAuNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5buQ5pmo5Z2HJkxpWQ8mKDAsKCwsNCw5MCw5OCw4NCw4Niw4NSwsKD/sKDEsMSwsKCw4Ny44NSw5Ny44NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*6I6e6IiS5pm0Jmhnc3omKD/sKCwsMyw5MCw4Nyw4Niw4MCw4NiwsNCwsNCwxKDEsKCwsOD/uOTUsOTMuOTUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5WqJ546z5Ky2JjA1MTcmMTIyOOS6i+QBhywyKCwsKDIsOTAsNzcsODAsODUsODIsKCwsKDEsMSwsKCw4My4wNSw4NS4wNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5aYa6IiS5oSbJjExMTgmKDAsKCwsMiw4OSw4Niw4Myw4OSw4NiwyKCwsKDEsMSwsKCw4Ni45KDkyKjkmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5by15qau5ZOyJjI4MDgmKCwxMTIz5Kie6eqy5K2P55So5omK5qmfKDUsKDMsODUsNzAsMCwwKCwsKCwsMSwxKCwyKCwyMy4yNSwyNS4yNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*6JSh5paH5oOgJnJpW2UmKD/sKCwsMiw4MywwKDc5KDg5KDgzKCwsKCwxKDIsMiwsKDcxKjc1KDc0Kjc1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5reI5pix5bu3JjEwMTWmKDAsKCwsMyw5MCw4OCw4Niw4MCw4OSwsKCwsMSwyKDIsMiwsODUuODUsOTUuODUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6eSa44CA6Iq4JjIwNDgmKDEyKDEwMTKlpJblpZflj43nqb8sNSwyKDMsODWsODcsODEsODMsODIsKCwsKCwxKDIsMiwsODMuNSw3Ni41JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5p6X44CA6Z2YJkZlMTImKDAsKCwyKDIsODUsODUsNzUsODMsODIsKCwsKDEsMiwsMiwsODIuMTUsOTEuMTUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5rGf6Iqz5bqtJjU5MjUmKDAsMTAxOYahjOS4iuYpuuYEoYS4gOYJqSw1KCwzKDg1KDgwKDc5KDg3KDkwKCwsKCwyKDIsKCwyKDg1KjIsODkuMiWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5bC55bCR55eHJlMxMjMmMTEyM+iri+QBhywyKCwsMiwzKDg3KDc1KDc4KDg1KDgyKDIsKDIsKDEsKCwsKDgyKDkwJiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5ZGo5a2r55SrJjg1OTgmKD/sMTEwOYQkluQll+aUvuQkp+iFvzEyMjHluKbpo7KmlpnpgKKmlZnlrq/sMTAsMSwzKDg4KDkwKDAsODEsOTAsKD/sKDUsMSwyKCwyKCw3My41KDc3KjUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6Zmz5b+X55ePJjA2MDgm5pyq57mz5Kqk5omP6eu+5K2c5qQt77yM5aCF5oyB6WG45K+uKDI4KCwsKCw4OSwwKDAsODAsODgsKCwsKDEsMiwsKCw1OS4zNSwzNC4zNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5amB44CA6WYLJjA1MTAmKDAsKCwsMyw4Nyw3OCwwKDg3KDc1KCwsKCwxKDEsMSwyKCw2OS42KDc3KjWmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6buD5a2/6IicJjA4MTEmKD/sKCwsMyw4Niw4OCwwKDg2KDkwKCwzKD/sNSwxKDEsMSwsKDc0Kj/sODguNCWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5K2Z6KeY5WSAJjAyMDcmKDAsKCwsMiw4Niw4MiwwKDg2KDgyKDIsKCwsMSwxKCwsKDcxKjUsNzcuNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5p2O5a2f5WSSJjA3MzAmMTEwMuS9j+mZouYXhYQBhzExMzDnl4XlgWfnibnlh4WsMCwxMDEy5oqx5aSQ5aQXKDUsKD/sODcsODcsODMsODWsODgsMywzKDMsKCwxKCwsKDg2KjM1KDk1KjM1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*6KaZ6emp5pm0JjA5MDEmKDAsKCwsMyw5MCw4NSw3MCw4Myw4MCwsKCwsMSwyKDIsKCw4MS42NSw4OS42NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5a2r55Gc5ZCbJjAxMTImKDAsKCwsMiw4OSw4OSw3Nyw4OSw4NCw0KCwsKDEuNSwxKCwsKDg1Kjk1KDk0Kj/1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5ZCz5K2z6KuSJjAxMjWmKDAsKCwsNCw5Miw4NywwKDg1KDgzKCwzKDMsKDEuNSwyKDIsKCw3My4xKDg4KjWmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6JSh5bm46Iq4JmE0NjMmKDAsKCwsMiw4Nyw5Niw3OCw4Nyw4MCwzKCw0KCwxKDEsKCwsODUuMjUsOTWuMjUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6eix5a626JOBJjMyMjcmKDAsKCwsMyw4Nyw5Miw3OCw4Myw4NiwsKDUsKDEuNSwxKCwsKDg0Kjk1KDk1Kj/1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5pu+56uK5oGGJjU5NDUmKDE2KCwsMiwzKDg3KDg4KDgzKDg5KDg1KD/sKDMsKDEsMSwsKCw4Ni42NSw4NC42NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5WeF5a6457YvJjA2MTcmKDAsKCwsMSw4NiwwKDAsODMsODIsKCwsKDEsMiwsKCw1OC4zKDWyKjMmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5b2t5Ki55aauJjEyMz/mMTAxMuYXhYQBhywwKCwsKDMsOTIsODMsMCw4Nyw3NSwsNCwyKCwxKDIsKCwsNzEuMSw4My4xJiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*6I6e44CA57+OJjExMjcmKDAsKCwxKD/sODgsODMsNzgsODAsODUsKCwsKDEsMSwsKCw4Mi42KDg5KjWmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6eix5WYx5aqbJjA3MTImKDAsKCwsMiw4OSw4NSw3Myw4Myw4MywsKCwsMSwyKCwsKDgyKjcsODcuNyWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*6Zmz5aQV6JOBJjEyMTkmKDAsKCwsNCw5Miw4OCw3OSw4MSw4MCwsNCw0KCwxKDEsKCwsODMuMTUsOTcuMTUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6Zmz5byW57+MJjM2NjImKDAsKCwxKDMsODWsODgsNzIsODMsODWsKCwsKDEsMiwsKCw4My4zKDkwKjMmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5rSq6IGQ5WukJjIxNDAmKD/sKCwsMyw4Nyw5MCw4MCw4Myw4MCwsKDIsKDEsMiwyKCwsODMuNDUsODkuNDUmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*5ZCz5W2J54+eJjM4MzMmKDgsKCwsMiw4Niw3OCw4MCw4Niw4MywsKCwsKDIsMiwsKDgzKjE1KDgxKjE1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5p6X5r2U5KulJkswMTgmKD/sMTAwNYQ4tumjn+YJqYmAsuaVmYQupCw1KCwzKDg3KDg1KDgzKDg1KDgyKDMsKCwsMSwyKCwsKDg0KjI1KDg0KjI1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5p6X5KiQ5piVJjA5NTgmKDgsMTAxOYahjOS4iuYpuuYEoYS4gOYJqSw1KDEsMywwKDgwKDAsODMsODIsKCwzKCwxKjUsMSwsKCw1Ny40KDUzKjkmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6auW54QS5oOFJjEyMDImKDAsKCwsNCw5MCw4Niw4MCw4MCw4NSw0KD/sMiwsMC41KDIsKCwyKDgzKjW1KDEwMi4xNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*546K5Z2H55GcJjA4MTAmKDAsKCwsMyw4Niw4Myw3OSw4MSw4MywyKCwsKDIsMSwsKCw4Mi4yNSw5MC4yNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5b6/6ZuF6IqzJjAxMDUmKDAsKCwxKD/sODgsODUsODUsODUsODUsKCwsKDEsMiwsKCw4NS40NSw5My40NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*6Zmz5bu65pm6JjEyMDEmMTEzMOiri+QBhzEyMDfoq4vlgWcsNjAsKCwsMSw4OSw4Niw4Miw4MSw4MCwsKCwsMSwxKDEsKCw4Mi44NSwyNi44NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5b6/5aSn6WiYJjAxNjgmKD/sKCwxKD/sOTUsOTIsOTAsODUsOTMsNiwsKCwwKjUsMiwsKCw5MC4zKDk5KjgmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*546K5pQs6IyxJjUzNjEmKDgsMTAwNYQ4tumjn+YJqYmAsuaVmYQupCw1KCw0KDkyKDg0KDc0KDgzKDkwKCwsMiw0KDEsMSwsKCw4NC45KDgzKjkmKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6buD5WGJ6WOhJjA4MTcmKDAsKCwsMyw4Niw4NSw4Myw4NSw5Myw0KD/sNCwsMS41KDIsKCwsODWuODUsMTA1KjM1JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5WCq5a2/5ra1JjMyMjgmKDAsKCwsNCw4OSw4Nyw4Miw4MCw5MCwsKCwsMSwxKCwyKCw4NS4yKDkzKjImKCwsKCwsKCwsKCwsKCwsKCwsKCwsKA==*6eyd5a6X5ZCrJjg2NzgmKDIwKCwsMSwyKDg2KDg0KDgwKDg1KDkwKDIsKCw1KDAuNSwxKCwyKCw4NS41KDc5JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*5p6X6emp6Iy5JjA2MTgmMTAwNYiri+QBhzEwMjboq4vlgWcsMTAsKCwsMywwKDg1KDAsODAsODcsKCw0KCwyKDEsKCwyKDU4KjUsNjAuNSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5pu+6Iul55GcJjA4MjMmKD/sKCwyKDMsODksNzUsNzUsODMsODUsKCwsKDEsMSwsKCw4Miw4NSWsKCwsKCwsKCwsKCwsKCwsKCwsKCws*5ZGo6IGQ5WeRJjAyMT/mKDAsKCwsMyw4OSw5Miw4NSw4NSw5MCw0KCwzKCwxKjUsMiwsKCw4Ny45KDEwMS40JiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*JiAmKCwsKCwsKCwsKCwsKCwsKCwsKCwsJiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*JiAmKCwsKCwsKCwsKCwsKCwsKCwsKCwsJiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=*JiAmKCwsKCwsKCwsKCwsKCwsKCwsKCwsJiwsKCwsKCwsKCwsKCwsKCwsKCwsKCw=</span>
+    <form>
+        <p>
+            <font size="2" face="Arial">歡迎登入一百零四學年度第一學期
+                <font color="#FF0000">職場生存</font>成績查詢系統 （建議使用IE瀏覽器查詢）
+            </font>
+        </p>
+        <p>
+            <font size="2" face="Arial">姓名</font>
+            <input name=uId type="text">
+            <font size="2" face="Arial">（姓名只有雙字者，中間請加上全型空白）</font>
+        </p>
+        <p>
+            <font size="2" face="Arial">密碼</font>
+            <input name=uPsw type="password" style="font-family:Courier New">
+            <input type="button" value="登錄" onClick="login(uId.value,uPsw.value)">
+        </p>
+        <p>
+            <font color="#0000FF" face="Arial" size="2">經過最後的計算，本學期有 32 位同學累積最後總分超過 90 分（當中有6 位同學總分超過100分，有2位是旁聽無學分者）。
+            </font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">
+                同時，很遺憾的，本學期共有 3 名同學不及格。</font>
+        </p>
+        <p>
+            <font color="#0000FF" face="Arial" size="2">
+                有38 位同學的打卡未被扣任何分數。（每學期一次病假不用扣分，公假喪假其他假等同事假，每次折半計算，扣 2 分）</font>
+        </p>
+        <p>
+            <font size="2" color="#0000FF" face="Arial">這學期有 6 位同學在沒有學分的情況下，完完整整參與旁聽，並繳交作業，這六名同學的學習精神值得大家學習。 其中，甚至有來自台北科技大學的同學，每週準時從自己的學校趕來旁聽，從未遲到，其精神令人敬佩！
+            </font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">
+                所有旁聽同學若滿意自己的分數，可於下次選中此門課時，直接領取這學期的分數作為成績，免上課。若無法修課者，本人願意免條件提供未來求職或就學之推薦函服務。</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">
+                此外，少部分同學因未繳交某些作業造成分數恐不及格的情形，卻沒有選擇放棄，並積極地尋求表現與加分的機會，積極態度相當可貴，就算最終分數不是很漂亮，相信這過程不僅是一種學習，也是值得驕傲的。</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">祝大家寒假充實愉快，也希望大家不要忘記追求自己的夢想。</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">
+                請使用IE查詢；忘記密碼者，不接受詢問密碼；倘若確定密碼無誤卻始終無法查詢，請洽助教。</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">
+                對於本分數有任何問題，請於1/8結束以前來信告知，或由助教轉告本人。屆時，將以此分數登入學校系統，不得更改。謝謝大家！</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#0000FF">(2016/01/07)</font>
+        </p>
+        <p>
+            </p>
+        <p>
+            <font face="Arial" size="2" color="#808000">成績單上的分數將四捨五入至整數。</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#808000">密碼為上課小卡片填寫的四位英數字代碼，密碼前後不得空白，
+                <br> 該密碼在校期間修習本人的課程通用。
+                <br> 此系統僅能查詢到本人開課的成績。
+            </font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#808000">忘記密碼者，請透過學校教務系統查詢個人成績，或等待學校郵寄成績單，
+                <br> 由於提供此成績查詢服務乃本人OCB，此外記住密碼是各位的責任，
+                <br> 因此無法另外提供忘記密碼者查詢密碼，請牢記密碼。
+            </font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#808000">建議以IE瀏覽器開啟，若使用其他網頁瀏覽程式，可能導致錯誤。</font>
+        </p>
+        <p>
+            <font face="Arial" size="2" color="#800000">
+                為了提供同學們更好的服務，自99學年度第二學期開始，本系統提供詳細原始成績資料。
+                <br> 你不用懷疑成績到底是怎麼算出來的，也可以看到自己在不同評分項目的表現。
+            </font>
+        </p>
+        <p>
+            </p>
+    </form>
+    <MARQUEE style="COLOR:#ffffff" align="center">本網頁以青蛙工作室的
+        <FONT face=Arial>eGrade 3.0 </FONT>製作，相關程式碼及查詢模組智慧財產權屬於青蛙工作室。</MARQUEE>
+</body>
+
+</html>
